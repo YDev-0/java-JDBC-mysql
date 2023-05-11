@@ -1,4 +1,4 @@
-package ma.maven.readWrite.dao.imp;
+package ma.maven.dbproject.dao.imp;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,8 +12,11 @@ public class Dao {
     if (conn == null) {
       try {
         Properties props = loadProperties();
+        Class.forName(props.getProperty("driver"));
         String url = props.getProperty("dburl");
         conn = DriverManager.getConnection(url, props);
+      } catch (ClassNotFoundException e) {
+        System.err.println("Problème de chargement de Driver");
       } catch (SQLException e) {
         System.err.println("Problème de chargement de Driver Manager");
       }

@@ -1,4 +1,4 @@
-package ma.maven.readWrite.entities;
+package ma.maven.dbproject.entities;
 
 public class Gcharacter  {
   private int id;
@@ -11,8 +11,8 @@ public class Gcharacter  {
 
   }
 
-  public Gcharacter(int id, String name, int health, float damage, Gclass gClass) {
-    this.id = id;
+  public Gcharacter(Integer id, String name, int health, float damage, Gclass gClass) {
+    this.id = id != null ? id : -1;
     this.name = name;
     this.health = health;
     this.damage = damage;

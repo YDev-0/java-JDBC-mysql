@@ -1,7 +1,6 @@
-package ma.maven.readWrite.dao;
+package ma.maven.dbproject.dao;
 
-import ma.maven.readWrite.entities.Gcharacter;
-import ma.maven.readWrite.entities.Gclass;
+import ma.maven.dbproject.entities.Gcharacter;
 
 import java.util.List;
 

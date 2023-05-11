@@ -1,9 +1,7 @@
-package ma.maven.readWrite.dao.imp;
+package ma.maven.dbproject.dao.imp;
 
-import ma.maven.readWrite.dao.GcharacterDao;
-import ma.maven.readWrite.dao.GclassDao;
-import ma.maven.readWrite.entities.Gcharacter;
-import ma.maven.readWrite.entities.Gclass;
+import ma.maven.dbproject.dao.GclassDao;
+import ma.maven.dbproject.entities.Gclass;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,18 +15,68 @@ public class GclassDaoImp implements GclassDao {
   private static Connection conn = Dao.getConnection();
 
   @Override
-  public void insert(Gclass gcharacter) {
+  public void insert(Gclass gclass) {
+    PreparedStatement ps = null;
 
+    try {
+      ps = conn.prepareStatement("INSERT INTO gclass (label, description) VALUES (?, ?)");
+      ps.setString(1, gclass.getLabel());
+      ps.setString(2, gclass.getDescription());
+      int rowsAffected = ps.executeUpdate();
+
+      if (rowsAffected > 0) {
+        ResultSet rs = ps.getGeneratedKeys();
+
+        if (rs.next()) {
+          int id = rs.getInt(1);
+
+          gclass.setId(id);
+        }
+
+        Dao.closeResultSet(rs);
+      } else {
+        System.out.println("Aucune ligne renvoyé");;
+      }
+
+    } catch (SQLException e) {
+      System.err.println("problème de requête pour l'ajout de la class : " + gclass);
+      System.err.println(e.getMessage());
+    } finally {
+      Dao.closeStatement(ps);
+    }
   }
 
   @Override
-  public void update(Gclass gcharacter) {
+  public void update(Gclass gclass) {
+    PreparedStatement ps = null;
 
+    try {
+      ps = conn.prepareStatement("UPDATE gclass SET label = ?, description = ? WHERE id = ?");
+      ps.setString(1, gclass.getLabel());
+      ps.setString(2, gclass.getDescription());
+      ps.setInt(3, gclass.getId());
+      ps.executeUpdate();
+
+    } catch (SQLException e) {
+      System.err.println("problème de requête pour mettre a jour de la class : " + gclass);
+    } finally {
+      Dao.closeStatement(ps);
+    }
   }
 
   @Override
   public void deleteById(int id) {
+    PreparedStatement ps = null;
 
+    try {
+      ps = conn.prepareStatement("DELETE FROM gclass WHERE id = ?");
+      ps.setInt(1, id);
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      System.err.println("problème de requête pour supprimer la class avec id : " + id);
+    } finally {
+      Dao.closeStatement(ps);
+    }
   }
 
   @Override

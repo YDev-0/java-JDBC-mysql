@@ -1,4 +1,4 @@
-package ma.maven.readWrite.entities;
+package ma.maven.dbproject.entities;
 
 public class Gclass {
   private int id;
@@ -9,12 +9,11 @@ public class Gclass {
 
   }
 
-  public Gclass(int id, String label, String description) {
-    this.id = id;
+  public Gclass(Integer id, String label, String description) {
+    this.id = id != null ? id : -1;
     this.label = label;
     this.description = description;
   }
-
   public int getId() {
     return id;
   }
