@@ -5,22 +5,24 @@ import ma.maven.dbproject.dao.GclassDao;
 import ma.maven.dbproject.dao.imp.GcharacterDaoImp;
 import ma.maven.dbproject.dao.imp.GclassDaoImp;
 import ma.maven.dbproject.entities.Gclass;
+import ma.maven.dbproject.service.ServiceGcharacter;
+import ma.maven.dbproject.service.ServiceGclass;
 
 public class Main {
 
-  public static void printAllClasses(GclassDao gclassDao) {
+  public static void printAllClasses(ServiceGclass serviceGclass) {
     System.out.println("---------------------------------------------------------------");
     System.out.println("Liste des Classes : ");
 
-    gclassDao.findAll().forEach(gclass -> {
+    serviceGclass.findAll().forEach(gclass -> {
       System.out.println(gclass);
     });
   }
   public static void main(String[] args) {
 
-    GcharacterDao gcharacterDao = new GcharacterDaoImp();
+    ServiceGcharacter serviceGcharacter = new ServiceGcharacter();
 
-    GclassDao gclassDao = new GclassDaoImp();
+    ServiceGclass serviceGclass = new ServiceGclass();
 
 //    System.out.println("---------------------------------------------------------------");
 //    System.out.println("Liste des Personnage : ");
@@ -34,17 +36,16 @@ public class Main {
 //    System.out.println("Personnage avec id : " + id);
 //    System.out.println(gcharacterDao.findById(id));
 
-//    gclassDao.insert(new Gclass(null, "test", "description test"));
-
-//    printAllClasses(gclassDao);
-
-//    gclassDao.update(new Gclass(16, "test update", "description test also updated"));
+//    serviceGclass.save(new Gclass(null, "test", "description test"));
 //
-//    printAllClasses(gclassDao);
+//    printAllClasses(serviceGclass);
 
-//    gclassDao.deleteById(16);
+//    serviceGclass.update(new Gclass(17, "test updated", "description test also updated"));
 //
-//    printAllClasses(gclassDao);
+//    printAllClasses(serviceGclass);
+
+    serviceGcharacter.exportAsExcel(serviceGcharacter.findAll(), "testGcharactersFioImport");
+    serviceGclass.exportAsExcel(serviceGclass.findAll(), "testGclassesFioImport");
 
   }
 }
